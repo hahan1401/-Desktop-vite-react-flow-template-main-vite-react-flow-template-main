@@ -27,11 +27,20 @@ export default function App() {
     <ReactFlow
       nodes={nodes}
       nodeTypes={nodeTypes}
-      onNodesChange={onNodesChange}
+      onNodesChange={(e) => {
+        console.log('node', e)
+        onNodesChange(e);
+      }}
       edges={edges}
       edgeTypes={edgeTypes}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
+      onEdgesChange={e => {
+        console.log('edge', e)
+        onEdgesChange(e)
+      }}
+      onConnect={e => {
+        console.log('connect', e)
+        onConnect(e)
+      }}
       fitView
     >
       <Background />
