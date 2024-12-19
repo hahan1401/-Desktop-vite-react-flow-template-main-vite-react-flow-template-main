@@ -86,6 +86,7 @@ body,
   position: absolute;
   pointer-events: all;
   transform-origin: center;
+  z-index: 9999;
 }
  
 .button-edge__button {
