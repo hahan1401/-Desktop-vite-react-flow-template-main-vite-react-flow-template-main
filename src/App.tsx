@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 import {
   ReactFlow,
   Background,
@@ -8,44 +8,69 @@ import {
   useNodesState,
   useEdgesState,
   type OnConnect,
-} from '@xyflow/react';
+  MarkerType,
+  Edge,
+} from "@xyflow/react";
 
-import '@xyflow/react/dist/style.css';
+import "@xyflow/react/dist/style.css";
 
-import { initialNodes, nodeTypes } from './nodes';
-import { initialEdges, edgeTypes } from './edges';
+import { initialNodes, nodeTypes } from "./nodes";
+import { edgeTypes, initialEdges } from "./edges";
+import { Button } from "./components/ui/button";
+
+const edgeOptions = {
+  type: "customEdge",
+  markerEnd: { type: MarkerType.ArrowClosed } satisfies Edge["markerEnd"],
+};
 
 export default function App() {
-  const [nodes, , onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const onConnect: OnConnect = useCallback(
     (connection) => setEdges((edges) => addEdge(connection, edges)),
     [setEdges]
   );
+  console.log("====edges=====", edges);
+  console.log("----nodes----------", nodes);
 
   return (
     <ReactFlow
       nodes={nodes}
       nodeTypes={nodeTypes}
       onNodesChange={(e) => {
-        console.log('node', e)
         onNodesChange(e);
       }}
       edges={edges}
       edgeTypes={edgeTypes}
-      onEdgesChange={e => {
-        console.log('edge', e)
-        onEdgesChange(e)
+      defaultEdgeOptions={edgeOptions}
+      onEdgesChange={(e) => {
+        onEdgesChange(e);
       }}
-      onConnect={e => {
-        console.log('connect', e)
-        onConnect(e)
+      onConnect={(e) => {
+        onConnect(e);
       }}
       fitView
     >
       <Background />
       <MiniMap />
       <Controls />
+      <div className="absolute top-3 left-3 z-50">
+        <Button
+          onClick={() => {
+            setNodes((prev) => [
+              ...prev,
+              {
+                id: Math.random().toString(),
+                type: "custom-node",
+                position: { x: -100, y: -200 },
+                data: { label: `node-${(prev.length + 1).toString()}` },
+              },
+            ]);
+          }}
+        >
+          Create node
+        </Button>
+      </div>
     </ReactFlow>
   );
 }

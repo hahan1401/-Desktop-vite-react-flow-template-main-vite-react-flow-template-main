@@ -4,9 +4,13 @@ import { CustomNode } from './CustomNode';
 import { AppNode } from './types';
 
 export const initialNodes: AppNode[] = [
-  { id: 'a', type: 'custom-node', position: { x: -300, y: 0 }, data: { label: 'aaaa', onClick: (id) => {
-    console.log('first', id)
-  } } },
+  {
+    id: 'a', type: 'custom-node', position: { x: -300, y: 0 }, data: {
+      label: 'a', onClick: (id) => {
+        console.log(`Node-${id} is clicked!!`)
+      }
+    }
+  },
   {
     id: 'b',
     type: 'custom-node',

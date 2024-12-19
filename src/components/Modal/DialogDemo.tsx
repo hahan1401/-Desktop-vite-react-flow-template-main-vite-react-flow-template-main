@@ -15,7 +15,9 @@ export function DialogDemo() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button onClick={e => {
+          e.stopPropagation()
+        }} variant="outline">Edit Profile</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
